@@ -6,17 +6,17 @@ CREATE TABLE Clientes (
     telefono VARCHAR(20),
     correo_electronico VARCHAR(50) UNIQUE NOT NULL,
     fecha_nacimiento DATE,
-    estado VARCHAR(10)
+    estado VARCHAR(10) NOT NULL CHECK (estado IN ('activo', 'inactivo'))
 );
 
 CREATE TABLE Cuentas_Bancarias (
     cuenta_id SERIAL PRIMARY KEY,
     cliente_id INTEGER REFERENCES Clientes(cliente_id),
     numero_cuenta VARCHAR(20) UNIQUE NOT NULL,
-    tipo_cuenta VARCHAR(20) NOT NULL,
+    tipo_cuenta VARCHAR(20) NOT NULL CHECK (tipo_cuenta IN ('corriente', 'ahorro')),
     saldo NUMERIC(15, 2),
     fecha_apertura DATE,
-    estado VARCHAR(10)
+    estado VARCHAR(10) NOT NULL CHECK (estado IN ('activa', 'cerrada'))
 );
 
 CREATE TABLE Transacciones (
@@ -63,7 +63,7 @@ CREATE TABLE Prestamos (
     tasa_interes NUMERIC(5, 2),
     fecha_inicio DATE,
     fecha_fin DATE,
-    estado VARCHAR(10)
+    estado VARCHAR(10) NOT NULL CHECK (estado IN ('activo', 'pagado'))
 );
 
 CREATE TABLE Tarjetas_de_Credito (
@@ -74,7 +74,7 @@ CREATE TABLE Tarjetas_de_Credito (
     saldo_actual NUMERIC(15, 2),
     fecha_emision DATE,
     fecha_vencimiento DATE,
-    estado VARCHAR(10)
+    estado VARCHAR(10) NOT NULL CHECK (estado IN ('activa', 'bloqueada'))
 );
 
 CREATE TABLE Clientes_Productos (
